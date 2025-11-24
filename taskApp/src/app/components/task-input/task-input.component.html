@@ -1,0 +1,21 @@
+<div class="input-container">
+  <div class="input-wrapper">
+    <input 
+      type="text" 
+      class="task-input"
+      [(ngModel)]="taskText"
+      (keypress)="onKeyPress($event)"
+      placeholder="¿Qué necesitas hacer hoy?"
+      maxlength="200">
+    <button 
+      class="add-btn"
+      (click)="addTask()"
+      [disabled]="!taskText.trim()">
+      <span class="plus-icon">+</span>
+      Agregar
+    </button>
+  </div>
+  <div class="input-hint" *ngIf="taskText.length > 0">
+    {{ taskText.length }}/200 caracteres
+  </div>
+</div>

@@ -1,0 +1,57 @@
+<div class="task-container">
+  <div class="header">
+    <h1 class="title">
+      <span class="icon">✓</span>
+      TaskApp
+    </h1>
+    <p class="subtitle">Organiza tu día de manera eficiente</p>
+  </div>
+
+  <app-task-input (taskAdded)="onTaskAdded($event)"></app-task-input>
+
+  <div class="stats">
+    <div class="stat-card pending">
+      <span class="stat-number">{{ pendingCount }}</span>
+      <span class="stat-label">Pendientes</span>
+    </div>
+    <div class="stat-card completed">
+      <span class="stat-number">{{ completedCount }}</span>
+      <span class="stat-label">Completadas</span>
+    </div>
+    <div class="stat-card total">
+      <span class="stat-number">{{ tasks.length }}</span>
+      <span class="stat-label">Total</span>
+    </div>
+  </div>
+
+  <div class="tasks-wrapper" *ngIf="tasks.length > 0; else emptyState">
+    <div class="task-item" 
+         *ngFor="let task of tasks; trackBy: trackByTaskId"
+         [class.completed]="task.completed">
+      <div class="task-content">
+        <button class="checkbox" 
+                (click)="toggleComplete(task)"
+                [class.checked]="task.completed">
+          <span class="checkmark" *ngIf="task.completed">✓</span>
+        </button>
+        <div class="task-info">
+          <p class="task-text">{{ task.text }}</p>
+          <span class="task-date">{{ task.createdAt | date:'short' }}</span>
+        </div>
+      </div>
+      <button class="delete-btn" 
+              (click)="onDeleteTask(task.id)"
+              title="Eliminar tarea">
+        <span class="delete-icon">×</span>
+      </button>
+    </div>
+  </div>
+
+  <ng-template #emptyState>
+    <div class="empty-state">
+      <div class="empty-icon">📝</div>
+      <h3>No hay tareas</h3>
+      <p>¡Agrega tu primera tarea para comenzar!</p>
+    </div>
+  </ng-template>
+</div>
